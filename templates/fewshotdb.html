@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MongoDB Table</title>
+    <link rel="stylesheet" href="/static/css/style_fewshotdb.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>    
+    <div class="main-content main-content-3">   
+        <div id="flash-container">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>          
+        <div class="container"> 
+            <h1>Fewshot Database</h1>           
+            <form class="container-table" id="container-table" method="GET" action="/get_collections">
+                <select name="collection_name" id="collection_dropdown" onchange="saveSelectedCollection(this.value); this.form.submit();">
+                    <option value="default" {% if collection_name == 'default' %}selected{% endif %}>โปรดเลือกฐานข้อมูล</option>
+                    {% for collection in collections %}
+                        <option value="{{ collection }}" {% if collection_name == collection %}selected{% endif %}>
+                            {{ collection }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </form>
+        </div>                
+        <div class="container2">
+            <table id="qna_table">
+                <thead>
+                    <tr>
+                        <th>ID <i class="fa fa-sort btn_sorttable" onclick="sortTable(0, this)"></i></th>
+                        <th>Question <i class="fa fa-sort btn_sorttable" onclick="sortTable(1, this)"></i></th>
+                        <th>Input <i class="fa fa-sort btn_sorttable" onclick="sortTable(2, this)"></i></th>
+                        <th>Correct Answer <i class="fa fa-sort btn_sorttable" onclick="sortTable(3, this)"></i></th>
+                        <th>Reference <i class="fa fa-sort btn_sorttable" onclick="sortTable(4, this)"></i></th>                                
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if entries %}
+                        {% for entry in entries %}
+                            <tr data-id="{{ entry['_id'] }}">
+                                <td><input type="text" class="idInput" value="{{ entry['_id'] }}" readonly></td>
+                                <td><textarea class="questionInput" oninput="adjustHeight(this)">{{ entry['question'] }}</textarea></td>
+                                <td><textarea class="userquestionInput" oninput="adjustHeight(this)">{{ entry['input'] }}</textarea></td>
+                                <td><textarea class="corransInput" oninput="adjustHeight(this)">{{ entry['correct_answer'] }}</textarea></td>
+                                <td><textarea class="refInput" oninput="adjustHeight(this)">{{ entry['reference'] }}</textarea></td>
+                                <td>
+                                    <i class="fa fa-edit editButton" onclick="sendRequest('/edit_row')"></i>
+                                    <i class="fa fa-save saveButton"></i>                                    
+                                    <i class="fa fa-trash deleteButton" onclick="sendRequest('/delete_row')"></i>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                    <tr id="no-data-row">                        
+                        <td colspan="6">ไม่พบรายการใดๆ</td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+            <button id="addRowButton"><i class="fa fa-plus" onclick="sendRequest('/add_row')"></i></button>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/script_fewshotdb.js') }}" defer></script>
+</body>
+</html>

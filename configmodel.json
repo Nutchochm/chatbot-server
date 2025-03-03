@@ -1,0 +1,32 @@
+{
+    "guest": {
+        "role": "guest",
+        "folder": "guest",
+        "radioID": 0
+    },
+    "student": {
+        "role": "student",
+        "folder": "student",
+        "radioID": 1
+    },
+    "admin": {
+        "role": "admin",
+        "folder": "admin",
+        "radioID": 2
+    },
+    "inspector": {
+        "role": "inspector",
+        "folder": "inspector",
+        "radioID": 3
+    },
+    "exclusive": {
+        "role": "exclusive",
+        "folder": "exclusive",
+        "radioID": 4
+    },
+    "chkans": {
+        "role": "admin",
+        "folder": "wangchanberta",
+        "activate": 1
+    }
+}

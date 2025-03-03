@@ -1,0 +1,341 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.wrapper {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    transition: all 0.3s ease;
+}
+
+.main-content-2 {
+    flex-direction: row;
+}
+/* TRAINING PANEL */
+
+.container {
+    width: 100%;
+    /*max-width: 900px;*/
+    margin: 50px auto;
+    padding: 20px;
+    overflow: hidden;
+    background-color: #fff;
+    border-radius: 12px;
+    /*display: flex;*/
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.technique-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Responsive Typography */
+h1 {
+    text-align: center;
+    color: #333;
+    font-size: 2rem;
+    margin-bottom: 30px;
+}
+
+/* Layout adjustments */
+form[id="trainForm"],
+form[id="uploadForm"],
+form[id="loadmodelForm"],
+#bertTechnique, #loraTechnique {
+    display: flex;
+    flex-direction: column;
+    margin-top: 15px;
+    border-radius: 20px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    padding: 30px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+}
+
+.file-upload {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 10px 0;
+}
+
+.file-upload input[type="file"] {
+    display: none;
+}
+
+.file-upload button[type="uploadbutton"] {
+    background-color: #007bff;
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+button[type="uploadbutton"]:hover {
+    background-color: #0056b3;
+}
+
+span {
+    font-size: 14px;
+    color: #333;
+}
+
+.main-content-2
+.container
+.upload-element {
+    display: flex;
+    flex-direction: row;
+    width: auto;
+    gap: 30px;
+}
+
+.main-content-2
+.container
+.mode-settings-container {
+    margin-top: 15px;
+}
+
+.mode-settings-container label {
+    width: fit-content;
+    gap: 10px;
+    margin-left: 0px;
+}
+
+/* Make buttons responsive */
+.main-content-2
+.container button {
+    padding: 15px;
+    font-size: 1rem;
+    width: 100%;
+    max-width: 300px;
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    transition: background-color 0.3s ease;
+    text-align: center;
+}
+
+.main-content-2
+.container button:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+}
+
+.main-content-2
+.container button.active {
+    background-color: #45a049;
+    transform: scale(1.05);
+}
+
+.main-content-2
+.container button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.main-content-2
+.container button[type="modebutton"]{
+    padding: 15px;
+    font-size: 1rem;
+    width: 110px;
+    cursor: pointer;
+    background-color: #ccc;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    transition: background-color 0.3s ease;
+    text-align: center;
+}
+
+.main-content-2
+.container button[type="uploadbutton"] {
+    width: 110px;
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+.main-content-2
+.container button[type="uploadbutton"]:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+.main-content-2
+.container button[type="uploadbutton"].active {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+.main-content-2
+.container button[type="modebutton"]:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+.main-content-2
+.container button[type="modebutton"].active {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+.main-content-2
+.container button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+input[type="text"], select[name="server_model"] {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    border-radius: 20px;
+    font-size: 1rem;
+    background-color: #eeeeee;
+    margin: 20px 0;
+}
+
+/* Responsive Form Inputs */
+input[type="text"], select {
+    width: 100%;
+    max-width: 400px;
+    padding: 10px;
+    border-radius: 20px;
+    font-size: 1rem;
+    background-color: #eeeeee;
+    margin: 10px 0;
+}
+
+/* Responsive Layout for Training Settings */
+.training-settings-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+/* Fine-tune group */
+.fine-tune-group {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 10px;
+    width: auto;
+    align-items: center;
+}
+
+
+.left-side,
+.right-side {    
+    display: inline-block;
+    width: 48%;
+    flex:1;
+    margin: 10px;
+}
+
+
+.fine-tune-group label {
+    font-size: 1rem;
+    margin: 10px;
+}
+
+.fine-tune-group input {
+    font-size: 1rem;
+    width: 150px;
+    margin: 10px;
+}
+
+div[id="technique"] {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+div[id="technique-container"] label, 
+div[id="device-container"] label,
+div[id="technique-container"] select, 
+div[id="device-container"] select   {
+    display: inline-block;
+    width: 200px;
+    margin: 20px 20px;
+    align-items: center;
+    justify-content: center;
+}
+div[id="technique-container"] , 
+div[id="device-container"]  {
+    display: flex;
+    width: 200px;
+    margin: auto;
+    align-items: center;
+    justify-content: center;
+}
+
+.modelsave {
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: space-between;
+    align-items: center;   
+}
+
+.modelsave .left-side,
+.modelsave .right-side {
+    flex: 1;    
+    padding: 10px;
+    min-width: 200px;
+}
+
+.main-content-2
+.container button[id="submittrain"] {
+    align-items: center;
+    justify-content: center;
+}
+
+#documentsubmit {
+    background-color: #28a745;
+    color: white;
+    width: min-content;
+    padding: 20px 25px;
+    margin: 30px 30px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    border: none;
+}
+
+#documentsubmit:hover {
+    background-color: #218838;
+}
+
+
+
+/* Form Responsive */
+#loadmodelForm, #uploadForm {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

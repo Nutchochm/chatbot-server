@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TRU Gen Next Training</title>
+    <link rel="stylesheet" href="/static/css/style_train.css">
+</head>
+<body>
+    <div class="wrapper">        
+        <div class="main-content-2">
+            <h1>TRU Gen Next Training</h1>
+            <div class="container">
+                <div class="upload-element">
+                    <!-- Dataset Upload -->
+                    <form id="uploadForm" method="POST" action="/upload_dataset" enctype="multipart/form-data">
+                        <label for="dataset">Upload Dataset:  (excel only)</label>                    
+                        <div class="file-upload">
+                            <input type="file" id="dataset" name="dataset" required>
+                            <button type="uploadbutton" class="custom-upload-btn" onclick="document.getElementById('dataset').click();">Choose Dataset</button>
+                            <span class="file-name">No file selected.</span>                                
+                        </div>                        
+                        <button type="submit" id="datasetsubmit">Upload</button>                                                          
+                        <div class="input-response-container" id="uploadStatus"></div>                 
+                    </form>
+                    <form id="loadmodelForm" method="POST" action="/upload_model" enctype="multipart/form-data">
+                        <label for="folderMode">Upload Model: (Model folder)</label>
+                        <div class="mode-settings-container">
+                            <button type="modebutton" id="clientModeBtn" class="mode-btn" onclick="toggleMode('client')">Training</button>
+                            <button type="modebutton" id="serverModeBtn" class="mode-btn" onclick="toggleMode('server')">Re-training</button>
+                            <label>
+                                <input type="radio" id="fileMode" name="selectionMode" value="file" checked>
+                                File
+                            </label>
+                            <label>
+                                <input type="radio" id="folderMode" name="selectionMode" value="folder">
+                                Folder
+                            </label>
+                        </div>
+                        <div id="clientModeSection">
+                            <div class="file-upload">
+                                <input type="file" id="inputSelector" name="model" multiple webkitdirectory>
+                                <button type="uploadbutton" class="custom-upload-btn" onclick="document.getElementById('inputSelector').click();">Choose Model</button>
+                                <span class="file-name">No model selected.</span>
+                            </div>
+                        </div>
+                        <div id="serverModeSection" style="display: none;">
+                            <select id="serverModelList" name="server_model">
+                                <option value="">-- Choose a Model --</option>
+                            </select>
+                        </div>                
+                        <button type="submit" id="modelsubmit">Load Model</button>
+                        <div class="input-response-container" id="uploadmodelStatus"></div>
+                    </form>
+                </div>
+                <form id="trainForm" method="POST" action="#">
+                    <!-- Training Options -->
+                    <div class="technique" id="technique">
+                        <div class="training-container" id="technique-container">
+                            <label for="fine-tune-technique">Technique:</label>
+                            <select id="fine-tune-technique" class="form-control" name="fine-tune-technique" required>
+                                <option value="None"> - </option>
+                                <option value="Bert">Bert (excel only)</option>
+                                <option value="Lora">Lora (excel only)</option>                        
+                            </select>            
+                        </div>
+                        <div class="device-container" id="device-container">
+                            <label for="device">Device:</label>                    
+                            <select class="form-control" id="device" name="device" required>
+                                <option value="" disabled selected>Select</option>
+                                <option value="cpu">CPU</option>
+                                <option value="cuda">CUDA</option>
+                            </select>
+                        </div> 
+                    </div> 
+                    <div id="trainingSettings_1" method="POST" action="/finetune_lora">
+                        <div class="training-settings-container">
+                            <div class="left-side">
+                                <div class="fine-tune-group"> <!-- input type="range" -->
+                                    <label for="lora_r">Lora R:</label>
+                                    <input type="text" class="form-control" id="lora_r" name="lora_r" value="16">
+                                </div>
+                                <div class="fine-tune-group">
+                                    <label for="lora_alpha">Lora Alpha:</label>
+                                    <input type="text" class="form-control" id="lora_alpha" name="lora_alpha" value="32">
+                                </div>
+                                <div class="fine-tune-group">
+                                    <label for="lora_dropout">Lora Dropout:</label>
+                                    <input type="text" class="form-control" id="lora_dropout" name="lora_dropout" value="0.1" step="0.01">
+                                </div>
+                            </div>  
+                            <div class="right-side">
+                                <div class="fine-tune-group">
+                                    <label for="learning_rate">Learning Rate:</label>
+                                    <input type="text" class="form-control" id="learning_rate" name="learning_rate" value="1e-4">
+                                </div>
+                                <div class="fine-tune-group">
+                                    <label for="batch_size">Batch Size:</label>
+                                    <input type="text" class="form-control" id="batch_size" name="batch_size" value="4">
+                                </div>
+                                <div class="fine-tune-group">
+                                    <label for="epochs">Epochs:</label>
+                                    <input type="text" class="form-control" id="epochs" name="epochs" value="3">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="trainingSettings_2" method="POST" action="/finetune_bert">
+                        <div class="training-settings-container">
+                            <div class="left-side">
+                                <div class="fine-tune-group">
+                                    <label for="bert_tr_bs">Train Batch Size:</label>
+                                    <input type="text" class="form-control" id="bert_tr_bs" name="bert_tr_bs" value="8">
+                                </div>
+                                <div class="fine-tune-group">
+                                    <label for="bert_ev_bs">Eval Batch Size:</label>
+                                    <input type="text" class="form-control" id="bert_ev_bs" name="bert_ev_bs" value="8">
+                                </div>
+                                <div class="fine-tune-group">
+                                    <label for="bert_lr">Learning Rate:</label>
+                                    <input type="text" class="form-control" id="bert_lr" name="bert_lr" value="2e-5">
+                                </div>
+                            </div>
+                            <div class="right-side">  
+                                <div class="fine-tune-group">
+                                    <label for="bert_epochs">Epochs:</label>
+                                    <input type="text" class="form-control" id="bert_epochs" name="bert_epochs" value="10">
+                                </div>
+                                <div class="fine-tune-group">
+                                    <label for="bert_decay">Decay:</label>
+                                    <input type="text" class="form-control" id="bert_decay" name="bert_decay" value="0.01">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modelsave">
+                        <div class="left-side">
+                            <div>
+                                <label for="output_path">Model Save Path:</label>
+                                <input type="text" id="output_path" name="output_path" required>
+                            </div>
+                        </div>                
+                        <div class="right-side">
+                            <div>
+                                <label for="model_name">Model Save Name:</label>
+                                <input type="text" id="model_name" name="model_name" required>
+                            </div>
+                        </div>                            
+                    </div>
+                    <button type="submit" id="submittrain">Start</button> 
+                </form>
+                <label id="loramessages"></label>
+                <!-- Progress -->
+                <div id="progressText", style="padding: 10px; margin:auto;"></div>
+                <!-- Plot -->
+                <div id="plotContainer", style="padding: 10px;">
+                    <img id="plotImage" src="" alt="LoRA Plot" style="max-width: 100%; height: auto;">
+                </div>                    
+            </div>
+            <h3>Power by Typhoon2</h3>
+        </div>        
+    </div>
+    <script src="{{ url_for('static', filename='js/script_train.js') }}" defer></script>
+</body>
+</html>

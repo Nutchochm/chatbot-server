@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TRU Gen Next Training</title>
+    <link rel="stylesheet" href="/static/css/style_home.css">
+</head>
+<body>
+    <div class="wrapper">
+        <nav class="nav-settings">
+            <div class="sidebar">
+                <div class="logo-settings" id="go-home" alt="Home" >
+                    <img src="https://www.tru.ac.th/images/act/imgact_1667551257.jpg">
+                </div>  
+                <ul class="nav-links">
+                    <li><a href="#" class="menu-link" id="nav-adminconfig" data-page="adminconfig" onclick="loadScriptForPage('script_adminconfig')">Adminconfig</a></li>
+                    <li><a href="#" class="menu-link" id="nav-training" data-page="train" onclick="loadScriptForPage('script_train')">Training</a></li>
+                    <li><a href="#" class="menu-link" id="nav-fewshotdb" data-page="fewshotdb" onclick="loadScriptForPage('script_fewshotdb')">Fewshot</a></li>
+                    <li><a href="#" class="menu-link" id="nav-rag" data-page="rag" onclick="loadScriptForPage('script_rag')">RAG</a></li>
+                </ul>
+                <form id="logout-form"class="nav-btn-logout" method="POST" action="/logout">
+                    <button type="submit" class="nav-btn-logout" onclick="confirmLogout()">
+                        <i class="fa fa-sign-out"></i> Logout
+                    </button>
+                </form>   
+            </div>            
+        </nav>        
+        <div class="content-area" id="content-area">
+        
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/script_home.js') }}" defer></script>    
+</body>
+</html>

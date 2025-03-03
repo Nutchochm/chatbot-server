@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>TRU Gen Next Training</title>
+        <link rel="stylesheet" href="/static/css/style_rag.css">        
+    </head>
+    <body>
+        <div id="flash-container">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+        <div class="main-content main-content-4">
+            <div class="container">
+                <form class="uploadDocForm" id="uploadDocForm" method="POST" enctype="multipart/form-data">
+                    <label for="document">ประเภทของไฟล์ (pdf, docx, txt):</label>
+                    <div class="docUpload-container">
+                        <div class="file-upload">
+                            <input type="file" id="document" name="files[]" required multiple>
+                            <label for="document">เลือกไฟล์</label>
+                            <span class="file-name">ยังไม่ได้เลือกไฟล์</span>
+                        </div>
+                        <select name="foldername" id="folderid">
+                            <option value="default" {% if collection_name == 'default' %}selected{% endif %}>อัพโหลดไปที่</option>
+                            {% for folder in folders %}
+                                <option value="{{ folder }}">{{ folder }}</option>
+                            {% endfor %}
+                        </select>
+                        <button type="submit" id="documentsubmit">อัพโหลด</button>
+                        <span id="process-file-name" class="process-file-name"></span>
+                        <div id="progress-container" class="progress-container" style="display: none;">                            
+                            <div id="progress-bar" class="progress-bar">0%</div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.min.js"></script>
+        <script src="{{ url_for('static', filename='js/script_rag.js') }}" defer></script>
+    </body>
+</html>
